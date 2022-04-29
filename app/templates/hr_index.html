@@ -51,10 +51,10 @@
     <!-- partial:partials/_sidebar.html -->
     <nav class="sidebar sidebar-offcanvas" id="sidebar">
       <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-        <a class="sidebar-brand brand-logo text-light text-decoration-none" href="hr_index.html">
+        <a class="sidebar-brand brand-logo text-light text-decoration-none" href="#">
           <p style="color: white; opacity: 1; font-size: 35px;margin-top: 3vh;">iNFOX</p>
         </a>
-        <a class="sidebar-brand brand-logo-mini text-light text-decoration-none" href="hr_index.html">
+        <a class="sidebar-brand brand-logo-mini text-light text-decoration-none" href="#">
           <p style="color: white; opacity: 1; font-size: 35px;margin-top: 3vh;">i</p>
         </a>
       </div>
@@ -142,7 +142,7 @@
                 <div class="dropdown-divider"></div>
                 <div class="dropdown-divider"></div>
 
-                <a class="dropdown-item preview-item" href="/logout/">
+                <a class="dropdown-item preview-item" href="{% url 'reqflush' %}">
 
                     <div class="preview-thumbnail">
                         <div class="preview-icon bg-dark rounded-circle">

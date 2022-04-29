@@ -9,9 +9,11 @@ from aptitude.settings import EMAIL_HOST_USER
 from django.core.mail import send_mail
 from django.views.defaults import page_not_found
 from django.contrib import messages
+from django.views.decorators.csrf import csrf_exempt
 import random
 import json
 from datetime import datetime
+import datetime
 
 
 def Register(request):
@@ -32,7 +34,7 @@ def Register(request):
         else:
             register = candidates(fullname=fname, email=email, contact_no=contact,
                                   qualifications=qualification, passout_year=passoutyr, college=college,
-                                  username=username, password=password, reference=reference, deptmnt_id=dept, regdate=datetime.now())
+                                  username=username, password=password, reference=reference, deptmnt_id=dept, regdate=datetime.datetime.now())
             register.save()
             messages.success(
                 request, 'username and password for exam is sent to your registered mail id.........')
@@ -59,28 +61,18 @@ def Register(request):
 
 def Login(request):
     des = designation.objects.get(designation='HR')
+    tims = exam_timing.objects.get(id=1)
+    current_datetime = datetime.datetime.now()
+
     if request.method == 'POST':
-        if candidates.objects.filter(email=request.POST['username'], password=request.POST['password']).exists():
-            mem = candidates.objects.get(
-                password=request.POST['password'], email=request.POST['username'])
-            request.session['username'] = mem.username
-            request.session['username1'] = mem.id
-            request.session['username2'] = mem.exam_status
-            request.session['username3'] = mem.email
-            request.session['username4'] = mem.deptmnt_id
-            username = request.session['username']
-            username1 = request.session['username1']
-            username2 = request.session['username2']
-            username3 = request.session['username3']
-            username4 = request.session['username4']
-            sn = 0
-            c = catagory.objects.all()
-            for i in c:
-                sn = sn+i.time_taken
-            if username2 == '0':
-                return render(request, 'aptitude_instructions.html', {'username': username, 'sn': sn, 'mem': mem})
-            else:
-                return redirect('/')
+
+        username = request.POST.get('username', None)
+        password = request.POST.get('password', None)
+        user = authenticate(username=username, password=password)
+        if user:
+            login(request, user)
+            return redirect('admin_dashboard')
+
         elif login.objects.filter(email=request.POST['username'], password=request.POST['password'], designation_id=des.id).exists():
             member = login.objects.get(
                 email=request.POST['username'], password=request.POST['password'])
@@ -89,15 +81,44 @@ def Login(request):
             request.session['usernamehr2'] = member.id
 
             return render(request, 'hrsec.html', {'member': member})
-        elif request.method == 'POST':
-            username = request.POST.get('username', None)
-            password = request.POST.get('password', None)
-            user = authenticate(username=username, password=password)
-            if user:
-                login(request, user)
-                return redirect('admin_dashboard')
-            else:
-                context = {'msg_error': 'Invalid data'}
+        else:
+
+            try:
+
+                tm = exam_timing.objects.get(
+                    from_date_time__lte=current_datetime, to_date_time__gte=current_datetime, id=1)
+                if tm:
+
+                    if candidates.objects.filter(email=request.POST['username'], password=request.POST['password']).exists():
+                        mem = candidates.objects.get(
+                            password=request.POST['password'], email=request.POST['username'])
+                        request.session['username'] = mem.username
+                        request.session['username1'] = mem.id
+                        request.session['username2'] = mem.exam_status
+                        request.session['username3'] = mem.email
+                        request.session['username4'] = mem.deptmnt_id
+                        username = request.session['username']
+                        username1 = request.session['username1']
+                        username2 = request.session['username2']
+                        username3 = request.session['username3']
+                        username4 = request.session['username4']
+                        sn = 0
+                        c = catagory.objects.all()
+                        for i in c:
+                            sn = sn+i.time_taken
+                        if username2 == '0':
+                            return render(request, 'aptitude_instructions.html', {'username': username, 'sn': sn, 'mem': mem})
+                        else:
+                            return redirect('/')
+
+                    else:
+                        context = {'msg_error': 'Invalid data'}
+                        return render(request, 'user_login.html', context)
+
+            except exam_timing.DoesNotExist:
+
+                context = {
+                    'msg_error': "Access Not avalable now. Attend Exam on right time"}
                 return render(request, 'user_login.html', context)
 
     return render(request, 'user_login.html')
@@ -169,7 +190,6 @@ def start(request, id):
             cnt = var.no_of_question
             j = question.objects.filter(ctgry_id=id).count()
 
-
             if var.name == "Technical_ability":
 
                 if int(cnt) <= j:
@@ -190,7 +210,7 @@ def start(request, id):
 
 
 def submit(request, id):
-  
+
     if 'username1' in request.session:
         if request.session.has_key('username1'):
             username1 = request.session['username1']
@@ -334,8 +354,13 @@ def total(request):
 # ******************ADMIN AND HR ******************
 
 
+def reqflush(request):
+    request.session.flush()
+    return redirect("/")
+
+
 def logout(request):
-    auth.logout(request)
+    logout(request)
     return redirect("/")
 
 # def admin_dashboard(request):

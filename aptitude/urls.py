@@ -77,6 +77,7 @@ urlpatterns = [
     path('admin_category_waiting/<int:id>/',views.admin_category_waiting , name='admin_category_waiting'),  
     path('hr_imagechange/', views.hr_imagechange, name='hr_imagechange'),
     path('imagechange/<int:id>', views.imagechange, name='imagechange'),
+    path('reqflush', views.reqflush, name='reqflush'),
     
     re_path(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}), 
     re_path(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}), 

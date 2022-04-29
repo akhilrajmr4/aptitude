@@ -59,3 +59,11 @@ class time_out(models.Model):
     category = models.ForeignKey(catagory,on_delete=models.SET_NULL,null=True,blank=True,related_name="category",default='')
     user = models.ForeignKey(candidates,related_name="user",on_delete=models.SET_NULL,null=True,blank=True,default='')
     exam_status = models.CharField(max_length=100,default='0')
+
+
+
+
+
+class exam_timing(models.Model):
+    from_date_time = models.DateTimeField()
+    to_date_time = models.DateTimeField()

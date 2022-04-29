@@ -35,7 +35,7 @@
                             <th class="text-white">Email</th>
                             <th class="text-white">contact</th>  
                             <th class="text-white">College</th>  
-                            <th class="text-white">Date</th>                          
+                            <th class="text-white">Registration Date</th>                          
                             <th class="text-white">Mark</th>
 
                         </tr>
@@ -50,7 +50,7 @@
                             <!-- <td >                               
                                 </td> -->
                             <td>
-                              {{i.username}}
+                              {{i.fullname}}
                             </td>
                             <td >{{i.email}}</td>
                             <td >
@@ -62,6 +62,7 @@
                             <td >
                                 {{i.regdate|date:"d-m-Y"}}
                             </td >
+                            
                             <td>
                                {{i.mark}}
                             </td>

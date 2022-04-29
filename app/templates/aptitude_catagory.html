@@ -25,58 +25,58 @@
             style="color: white; opacity: 1;font-family: Rubik,sans-serif; font-size: 18px;margin-top: 3vh;">
             &nbsp;Welcome&nbsp;
             {{mem.fullname}}&nbsp;&nbsp;</p>
-            <a href="/total/" class="btn btn-primary mt-3"  style="width: 180px;">Finish Test</a>
+        <a href="/total/" class="btn btn-primary mt-3" style="width: 180px;">Finish Test</a>
         <!-- <a href="/" class="btn btn-danger " style="width: 70px;">Logout</a>  -->
-        
+
     </nav>
-    
+
     <div class="container-fluid" style="background-color: black;width: 100%;min-height: 100vh;">
-       <div class="row" style="padding-top:20px;">
-        {%  for i in m  %}
-      
+        <div class="row" style="padding-top:20px;">
+            {% for i in m %}
+
             <div class="col-lg-6 col-md-6 col-sm-6 col-12 grid-margin">
-               
-                    <div class="card mb-3" id="hide" style="height:auto;background-color:#191C24">
 
-                        <a href="/start/{{i.id}}" style="text-decoration: none; color: white;">
-                            <div class="card-body">
+                <div class="card mb-3" id="hide" style="height:auto;background-color:#191C24">
 
-                                <div class="row mt-4 ml-1 " class="col-12 col-sm-12 col-md-12 col-lg-12">
-                                    <h5 >{{i.name}}</h5>
+                    <a href="/start/{{i.id}}" style="text-decoration: none; color: white;">
+                        <div class="card-body">
+
+                            <div class="row mt-4 ml-1 " class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                <h5>{{i.name}}</h5>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-6 col-sm-6 col-md-7 col-lg-7">
+                                    <h5 class="text-justify">Question Count</h5>
                                 </div>
-                                <div class="row mt-4">
-                                    <div class="col-6 col-sm-6 col-md-7 col-lg-7">
-                                        <h5 class="text-justify" >Question Count</h5>
-                                    </div>
-                                    <div class="col-6 col-sm-6 col-md-5 col-lg-4">
-                                        <h5 >{{i.no_of_question}}</h5>
-                                    </div>
+                                <div class="col-6 col-sm-6 col-md-5 col-lg-4">
+                                    <h5>{{i.no_of_question}}</h5>
                                 </div>
-                                <div class="row mt-0 mt-sm-0">
-                                    <div class="col-6 col-sm-6 col-md-7 col-lg-7">
-                                        <h5 class="text-justify" >Time</h5>
-                                    </div>
-                                    <div class="col-6 col-sm-6 col-md-5 col-lg-5">
-                                        <h5 >{{i.time_taken}}&nbsp;Minutes&nbsp;<i
-                                                class="icon-sm mdi mdi-timer text-danger ms-auto"></i></h5>
-                                    </div>
+                            </div>
+                            <div class="row mt-0 mt-sm-0">
+                                <div class="col-6 col-sm-6 col-md-7 col-lg-7">
+                                    <h5 class="text-justify">Time</h5>
                                 </div>
-                         </div>
-                        </a>
-                    </div>
+                                <div class="col-6 col-sm-6 col-md-5 col-lg-5">
+                                    <h5>{{i.time_taken}}&nbsp;Minutes&nbsp;<i
+                                            class="icon-sm mdi mdi-timer text-danger ms-auto"></i></h5>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
 
             </div>
-           
-    
-  {% endfor %}
 
+
+            {% endfor %}
+
+        </div>
     </div>
-</div>
-<script>
-    if (performance.navigation.type == 3) {
-        location.reload(true);
-    }
-   
+    <script>
+        if (performance.navigation.type == 3) {
+            location.reload(true);
+        }
+
     </script>
     <!-- {% if msg_warning %}
     <script>
@@ -100,13 +100,12 @@
             showConfirmButton: false,
             timer: 5000
         }).then(function () {
-            window.location.href = '/';
+            window.location.href = "{% url 'reqflush' %}";
         })
     </script>
     {% endif %}
-    <script>
-      </script>
    
+
 </body>
 
 </html>

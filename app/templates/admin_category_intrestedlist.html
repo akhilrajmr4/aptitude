@@ -19,8 +19,8 @@
             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                 <form>
                     <div class="input-group input-group-sm mb-3">
-                        <input type="text" class="form-control text-white" id="myInput"
-                            placeholder="Search . . ." style="border: green" />
+                        <input type="text" class="form-control text-white" id="myInput" placeholder="Search . . ."
+                            style="border: green" />
                     </div>
                 </form>
             </div>
@@ -32,13 +32,14 @@
                             <!-- <th></th> -->
                             <th class="text-white">Name</th>
                             <th class="text-white">Email</th>
-                            <th class="text-white">contact</th> 
-                            <th class="text-white">Registration Date</th>                            
+                            <th class="text-white">contact</th>
+                            <th class="text-white">Registration Date</th>
+                            <th class="text-white">Department</th>
                             <th class="text-white">Mark</th>
 
                         </tr>
                     </thead>
-                    <tbody  id="myTable">
+                    <tbody id="myTable">
                         {% for i in m %}
                         <tr>
                             <td>
@@ -47,20 +48,24 @@
                             <!-- <td >                               
                                 </td> -->
                             <td>
-                              {{i.fullname}}
+                                {{i.fullname}}
                             </td>
-                            <td >{{i.email}}</td>
-                            <td >
-                                {{i.contact_no}}
-                            </td >
-                            <td >
-                                {{i.regdate|date:'d-m-Y'}}
-                            </td >
+                            <td>{{i.email}}</td>
                             <td>
-                               {{i.mark}}
+                                {{i.contact_no}}
+                            </td>
+                            <td>
+                                {{i.regdate|date:'d-m-Y'}}
+                            </td>
+                            </td>
+                            <td>
+                                {{i.deptmnt.name}}
+                            </td>
+                            <td>
+                                {{i.mark}}
                             </td>
                         </tr>
-                            
+
                         {% endfor %}
 
                     </tbody>
@@ -71,14 +76,14 @@
 </div>
 
 <script>
-$(document).ready(function(){
-  $("#myInput").on("keyup", function() {
-    var value = $(this).val().toLowerCase();
-    $("#myTable tr").filter(function() {
-      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    $(document).ready(function () {
+        $("#myInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
     });
-  });
-});
 </script>
 
 {% endblock %}

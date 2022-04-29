@@ -28,10 +28,12 @@
                 <table class="table" >
                     <thead>
                         <tr>
-                            <th class="text-white " style="padding-left:36px;">SNo</th>
+                            <th class="text-white " >SNo</th>
 
-                            <th class="text-white" style="padding-right:20px;">Name</th>
+                            <th class="text-white" >Name</th>
                             <th class="text-white">Email</th>
+                            <th class="text-white">Contact</th>
+                            <th class="text-white">Department</th>
                             <th class="text-white">Reference</th>
                             <th class="text-white">College</th>
                             <th class="text-white">Mark</th>
@@ -45,7 +47,7 @@
                             <form method="post" action="/admin_allMembers_reference/{{i.id}}"
                                 enctype="multipart/form-data">
                                 {%csrf_token%}
-                                <td style="padding-left:40px;">
+                                <td style="padding-left:20px;">
                                     {{forloop.counter}}
                                 </td>
                                 <!-- <td class="pl-5">                                    
@@ -57,6 +59,12 @@
                                 <td>
                                     {{i.email}}
                                 </td>
+                                <td>
+                                    {{i.contact_no}}
+                                </td>
+                                <td>
+                                    {{i.deptmnt.name}}
+                                </td>
 
 
                                 <td>
@@ -65,20 +73,6 @@
                                 <td>
                                     {{i.college}}
                                 </td>
-                                <!--<td>-->
-                                <!--    {% if i.reference == 'no reference' or i.reference == 'Select HR' %}-->
-                                <!--    <select class="badge badge-outline-primary bg-dark text-muted" name="refer">-->
-                                <!--        {%for i in desgn%}-->
-                                <!--        <option style="display: none">Reference</option>-->
-                                <!--        <option value="{{i.fullname}}">{{i.fullname}}</option>-->
-                                <!--        {%endfor%}-->
-                                <!--    </select>-->
-                                <!--    <button type="submit" class="btn btn-outline-primary btn-icon-text">-->
-                                <!--        <i class="mdi mdi-file-check btn-icon-prepend"></i>Submit-->
-                                <!--    </button>-->
-                                <!--    {% else %}-->
-                                <!--    {% endif %}-->
-                                <!--</td>-->
                                 <td>
                                     {{i.mark}}
                                 </td>

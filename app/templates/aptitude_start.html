@@ -103,6 +103,19 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  {% if msg_succ %}
+    <script>
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            text: '{{ msg_succ }}',
+            showConfirmButton: false,
+            timer: 5000
+        }).then(function () {
+            window.location.href = "{% url 'reqflush' %}";
+        })
+    </script>
+    {% endif %}
 {% if msg_success %}
   <script>
     Swal.fire({
@@ -133,7 +146,14 @@ if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
       dataType: 'json',
       success: function (response) {
         if (response.msg = "success") {
-          window.location.href="/";
+          Swal.fire({
+            icon: 'error',
+            text: 'Violating rules',
+            showConfirmButton: false,
+            timer: 3000
+          }).then(function () {
+            window.location.href="{% url 'total' %}";
+          })
         }
       }
   });
@@ -190,6 +210,14 @@ function status_set() {
         console.log('test', dct)
 
     }
+  </script>
+   <script>
+    $(document).ready(function () {
+      function disableBack() { window.history.forward() }
+
+      window.onload = disableBack();
+      window.onpageshow = function (evt) { if (evt.persisted) disableBack() }
+    });
   </script>
   
   
